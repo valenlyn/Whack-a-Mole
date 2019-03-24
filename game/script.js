@@ -1,7 +1,7 @@
 console.log("Linked");
 
-var score = 5;
-var round = 1;
+var score = 15;
+var round = 3;
 
 var info = document.getElementsByClassName('info')[0];
 var displayScore = document.createElement('p');
@@ -40,11 +40,11 @@ function createDivs() {
         // moles.setAttribute('style','display:none');
         div.appendChild(moles);
 
-        var pimples = document.createElement('img');
-        pimples.setAttribute('src','happy-mole.png');
-        pimples.setAttribute('style','width:50px;height:50px;display:none');
-        pimples.setAttribute('class','pimples')
-        div.appendChild(pimples);
+        var happyMoles = document.createElement('img');
+        happyMoles.setAttribute('src','happy-mole.png');
+        happyMoles.setAttribute('style','width:50px;height:50px;display:none');
+        happyMoles.setAttribute('class','happy-mole')
+        div.appendChild(happyMoles);
 
     }
 
@@ -59,32 +59,42 @@ function createDivs() {
 createDivs();
 
 function hit() {
-    this.setAttribute('style','display:none');
+
+    var pointDisplay = document.createElement('span');
+    pointDisplay.setAttribute('class','point');
+    this.parentNode.insertBefore(pointDisplay, this);
+    setTimeout(function(){pointDisplay.setAttribute('style','display:none')},700);
+
+    if (event.target.classList[0] === "mole") {
     score++;
-    displayScore.innerText= "Score: " + score;
-    // var parent = this.parentNode;
-    // parent.removeChild(this);
+    displayScore.innerText = "Score: " + score;
+    pointDisplay.innerText = "+1";
 
-// Display points earned
-    // var pointDisplay = document.createElement('span');
-    // pointDisplay.setAttribute('class','point');
-    // pointDisplay.innerText = "+1";
-    // this.parentNode.insertBefore(pointDisplay, this);
-    // setTimeout(function(){pointDisplay.setAttribute('style','display:none')},1000);
-
-}
+    } else if (event.target.classList[0] === "happy-mole") {
+        score--;
+        displayScore.innerText = "Score: " + score;
+        pointDisplay.setAttribute('style','color:red');
+        pointDisplay.innerText = "-1";
+    }
 
 
-// function addEventListener(boxes) {
-//     boxes.addEventListener('click',hit);
-// }
-
-
-function badHit() {
     this.setAttribute('style','display:none');
-    score--;
-    displayScore.innerText= "Score: " + score;
+
 }
+
+// function badHit() {
+//     this.setAttribute('style','display:none');
+//     score--;
+//     displayScore.innerText= "Score: " + score;
+
+//     var pointDisplay = document.createElement('span');
+//     pointDisplay.setAttribute('class','point');
+//     pointDisplay.setAttribute('style','color:red');
+//     pointDisplay.innerText = "-1";
+//     this.parentNode.insertBefore(pointDisplay, this);
+//     setTimeout(function(){pointDisplay.setAttribute('style','display:none')},700);
+
+// }
 
 function makeMoles(timeToAppear,timeToDisappear) {
     setTimeout(function(){
@@ -100,22 +110,14 @@ function makeMoles(timeToAppear,timeToDisappear) {
 function makeHappyMoles(timeToAppear,timeToDisappear){
     setTimeout(function(){
             var randomNumber = Math.floor(Math.random() * 30) + 1;
-    document.getElementsByClassName('pimples')[randomNumber].setAttribute('style','display:inline');
-    document.getElementsByClassName('pimples')[randomNumber].addEventListener('click',badHit);
+    document.getElementsByClassName('happy-mole')[randomNumber].setAttribute('style','display:inline');
+    document.getElementsByClassName('happy-mole')[randomNumber].addEventListener('click',hit);
 
     setTimeout(function(){
-        document.getElementsByClassName('pimples')[randomNumber].setAttribute('style','display:none')}, timeToDisappear);
+        document.getElementsByClassName('happy-mole')[randomNumber].setAttribute('style','display:none')}, timeToDisappear);
 },timeToAppear)
 }
 
-function makeHappyMoles3000() {
-    var randomNumber = Math.floor(Math.random() * 30) + 1;
-    document.getElementsByClassName('pimples')[randomNumber].setAttribute('style','display:inline');
-    document.getElementsByClassName('pimples')[randomNumber].addEventListener('click',badHit);
-
-    setTimeout(function(){
-        document.getElementsByClassName('pimples')[randomNumber].setAttribute('style','display:none')}, 3000);
-}
 
 
 function roundOne() {
@@ -217,8 +219,6 @@ makeHappyMoles(6500,3000);
                     function message() {
                         console.log("Won");
                     round++;
-                    setTimeout(roundTwo,1500);
-
                     }
 
                     setTimeout(message,1000);
@@ -263,21 +263,12 @@ makeMoles(11500,1000);
 makeMoles(12000,1300);
 makeMoles(12500,1200);
 
-
 makeHappyMoles(2000,3000);
 makeHappyMoles(5500,3000);
 makeHappyMoles(6500,3000);
 makeHappyMoles(1500,2000);
 
-
-
     // timedCount(21,30);
-
-
-
-
-
-
 
 }
 

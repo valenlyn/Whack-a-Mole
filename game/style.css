@@ -6,7 +6,7 @@ body {
 	background-color: yellow;
 	width: 500px;
 	height: 550px;
-	padding: 10px;
+	padding: 50px;
 	margin: 40px auto;
 }
 
@@ -20,6 +20,8 @@ body {
 	display: inline-block;
 	width: 70px;
 	height: 70px;
+	display: inline-flex;
+	justify-content: center;
 }
 
 p {
@@ -40,13 +42,40 @@ span {
 }
 
 .point {
-
+	position: absolute;
+	font-size: 25px;
+	font-weight: 800;
+	margin: 0;
+	padding: 0;
+	align-self: flex-start;
+	animation: slideUp 0.8s, fadeOut 0.8s;
+	animation-direction: normal;
+	animation-iteration-count: 1;
 }
 
 img {
 	width:70px;
 	height:70px;
 }
+
+@keyframes slideUp {
+	from {
+		transform: translateY(0, 0, 0);
+	}
+	to {
+		transform: translateY(-10px);
+	}
+}
+
+@keyframes fadeOut {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
 
 @keyframes bounce {
 	from {
@@ -57,7 +86,7 @@ img {
 	}
 }
 
-.pimples {
+.happy-mole {
 	animation: bounce 0.5s;
 	animation-direction: alternate;
 	animation-iteration-count: infinite;
