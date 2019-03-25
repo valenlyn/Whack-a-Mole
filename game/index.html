@@ -6,14 +6,12 @@
     <head>
     </head>
     <body oncopy="return false" oncut="return false" onpaste="return false">
-        <div class="round">
-        </div>
         <div id="main">
             <div class="game-over">
                 <div class="message">Message here</div>
 
                 <div class="input-button">
-                    <input type="text" placeholder="your name" onclick="this.select()" autofocus></input> <button>OK</button>
+                    <input type="text" placeholder="your name" onclick="this.select()" autofocus></input>
                 </div>
 
                 <div class="leaderboard">
@@ -25,14 +23,13 @@
                     </table>
                 </div>
                 <div class="retry-restart">
-                    <button class="retry">Retry stage</button>
                     <button class="restart">Restart game</button>
                 </div>
             </div>
         </div>
 
         <div class="info">
-            <div id="timer"></div>
+            <div id="timer" style="display:none"></div>
         </div>
 
     <script src="airtable.browser.js"></script>

@@ -4,7 +4,7 @@ body {
 }
 
 #main {
-	background-color: yellow;
+	background-color: #FFF;
 	width: 500px;
 	height: 550px;
 	padding: 50px;
@@ -18,7 +18,7 @@ body {
 }*/
 
 .box {
-	background-color: yellow;
+	background-color: #FFF;
 	display: inline-block;
 	width: 70px;
 	height: 70px;
@@ -151,7 +151,7 @@ th, td {
 
 .retry-restart {
 	display: flex;
-	justify-content: space-between;
+	justify-content: center;
 	margin: 0 10px 0 10px;
 	align-self: flex-end;
 }

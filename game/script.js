@@ -12,23 +12,11 @@ info.appendChild(displayScore);
 var area = document.getElementById('main');
 var boxes = [];
 
-var roundInfo = document.getElementsByClassName('round')[0];
-var displayRound = document.createElement('p');
-displayRound.innerText = "Round: " + round;
-roundInfo.appendChild(displayRound);
-
-var roundMessage = document.createElement('span');
-roundMessage.innerText = "";
-roundInfo.appendChild(roundMessage);
-
 /* Leaderboard */
 
 var topScores = [];
 
 var name = "";
-
-var button = document.querySelector('button');
-button.addEventListener('click',getInput);
 
 const nameInput = document.querySelector('input');
 nameInput.addEventListener('keydown', function onEvent(event) {
@@ -224,6 +212,10 @@ function makePimples(timeToAppear,timeToDisappear) {
 },timeToAppear)
 }
 
+function restartGame() {
+    window.location.reload();
+}
+
 function gameOver() {
 
         var gameOverPopUp = document.getElementsByClassName('game-over')[0];
@@ -238,6 +230,10 @@ function gameOver() {
         gameMsg.innerText = "New high score!";
         document.getElementsByClassName('input-button')[0].setAttribute('style','display:flex');
     }
+
+
+    var restartButton = document.getElementsByClassName('restart')[0];
+    restartButton.addEventListener('click', restartGame);
 
 }
 
@@ -277,16 +273,12 @@ function countdownTimer(pointsNeeded) {
                 }
 }
 }
-
-
 countdownTimer(2);
-
-
 
 
 function roundOne() {
 
-    roundMessage.innerText = "Whack 5 unhappy moles";
+    alert("Whack 5 sad moles");
 
     makeMoles(2200,2000);
     makeMoles(1500,3000);
@@ -341,8 +333,7 @@ function roundOne() {
 
 function roundTwo() {
 
-displayRound.innerText = "Round: " + round;
-roundMessage.innerText = "Whack 10 unhappy moles, don't whack the happy ones!";
+    alert("Get 15 points. Don't whack the bouncing happy moles!");
 
 makeMoles(1000,4000);
 makeMoles(2000,3000);
@@ -386,7 +377,7 @@ makeHappyMoles(6500,3000);
                     function message() {
                         console.log("Won");
                     round++;
-                    setTimeout(roundThree,1000);
+                    setTimeout(roundThree,2000);
                     }
 
                     setTimeout(message,1000);
@@ -406,8 +397,8 @@ makeHappyMoles(6500,3000);
 
 
 function roundThree() {
-displayRound.innerText = "Round: " + round;
-roundMessage.innerText = "Get 30 points to get to the next round";
+
+alert("Get 30 points to get to the next round!");
 
 makeMoles(1000,4000);
 makeMoles(2000,3000);
