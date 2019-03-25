@@ -1,14 +1,16 @@
 body {
-	background-color: #999;
+	background-color: #FFF;
 	font-family: 'Nunito', sans-serif;
 }
 
 #main {
-	background-color: #FFF;
-	width: 500px;
+	background-image: url('art/face.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+	width: 550px;
 	height: 550px;
-	padding: 50px;
-	margin: 40px auto;
+	padding: 40px;
+	margin: 30px auto;
 	position: relative;
 }
 
@@ -18,7 +20,7 @@ body {
 }*/
 
 .box {
-	background-color: #FFF;
+	background-color: transparent;
 	display: inline-block;
 	width: 70px;
 	height: 70px;
