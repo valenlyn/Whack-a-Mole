@@ -181,7 +181,7 @@ function hit() {
 
 function makeMoles(timeToAppear,timeToDisappear) {
     setTimeout(function(){
-        var randomNumber = Math.floor(Math.random() * 45) + 1;
+        var randomNumber = Math.floor(Math.random() * 35) + 1;
     document.getElementsByClassName('mole')[randomNumber].setAttribute('style','display:inline');
     document.getElementsByClassName('mole')[randomNumber].addEventListener('click',hit);
 
@@ -192,7 +192,7 @@ function makeMoles(timeToAppear,timeToDisappear) {
 
 function makeHappyMoles(timeToAppear,timeToDisappear) {
     setTimeout(function(){
-            var randomNumber = Math.floor(Math.random() * 30) + 1;
+            var randomNumber = Math.floor(Math.random() * 35) + 1;
     document.getElementsByClassName('happy-mole')[randomNumber].setAttribute('style','display:inline');
     document.getElementsByClassName('happy-mole')[randomNumber].addEventListener('click',hit);
 
@@ -283,7 +283,6 @@ function roundOne() {
     makeMoles(2200,2000);
     makeMoles(1500,3000);
     makeMoles(1000,4000);
-    makeMoles(3000,2000);
     makeMoles(2800,2000);
     makeMoles(2000,3000);
     makeMoles(1900,3000);
@@ -310,7 +309,7 @@ function roundOne() {
                     function message() {
                     console.log("Won");
                     round++;
-                    setTimeout(roundTwo,1500);
+                    // setTimeout(roundTwo,1500);
 
                     }
 
@@ -320,7 +319,7 @@ function roundOne() {
                 } else {
                     console.log("Failed.")
                     status = "lost";
-                    gameOver();
+                    // gameOver();
                 }
             }
 
