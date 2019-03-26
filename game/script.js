@@ -115,7 +115,7 @@ function getInput() {
         oldScoreBoard.removeChild(scoreBoardNames[i]);
     }
 
-    getAirtableRecords();
+    setTimeout(getAirtableRecords,400);
 
 }
 
@@ -128,7 +128,7 @@ function getHighScores() {
     // Selecting the first 3 records in Grid view:
     maxRecords: 10,
     view: "Grid view",
-    sort: [{field: "Score", direction:"desc"}]
+    sort: [{field: "Score", direction:"desc"},{field: "Created Time", direction:"desc"}]
 }).eachPage(function page(records, fetchNextPage) {
     // This function (`page`) will get called for each page of records.
 
@@ -152,7 +152,7 @@ base('Table 1').select({
     // Selecting the first 3 records in Grid view:
     maxRecords: 10,
     view: "Grid view",
-    sort: [{field: "Score", direction:"desc"}]
+    sort: [{field: "Score", direction:"desc"},{field: "Created Time", direction:"desc"}]
 }).eachPage(function page(records, fetchNextPage) {
     // This function (`page`) will get called for each page of records.
 
