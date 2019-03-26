@@ -64,8 +64,9 @@ span {
 
 .point {
 	position: absolute;
-	font-size: 25px;
+	font-size: 30px;
 	font-weight: 900;
+	color: #0DAD64;
 	text-shadow: 2px 2px 2px #FFF;
 	margin: 0;
 	padding: 0;
@@ -236,7 +237,7 @@ footer {
   padding: 0 5px 30px 5px;
   border: 1px solid #888;
   width: 55%; /* Could be more or less, depending on screen size */
-  border-radius: 24px;
+  border-radius: 28px;
 }
 
 /* The Close Button */
