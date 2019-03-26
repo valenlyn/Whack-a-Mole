@@ -14,10 +14,9 @@ body {
 	position: relative;
 }
 
-/*.info {
-	display: flex;
-	justify-content: center;
-}*/
+.info {
+	font-weight: 900;
+}
 
 .box {
 	background-color: transparent;
@@ -116,8 +115,8 @@ img {
 
 .game-over {
 	background-color: black;
-	width: 450px;
-	height: 510px;
+	width: 82%;
+	height: 515px;
 	font-size: 20px;
 	margin: 2px auto;
 	padding: 20px;
@@ -196,6 +195,18 @@ button:hover {
 #example {
 	width: 200px;
 	height: 200px;
+}
+
+footer {
+	background-color: #000;
+	color: #FFF;
+	display: flex;
+	align-items: row;
+	justify-content: space-around;
+	width: 550px;
+	padding: 30px;
+	margin: 30px auto;
+	border-radius: 20px;
 }
 
 /* The Modal (background) */
