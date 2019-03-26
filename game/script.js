@@ -12,6 +12,34 @@ info.appendChild(displayScore);
 var area = document.getElementById('main');
 var boxes = [];
 
+var roundInfo = [
+    {
+        "round": 0,
+        "instructions": "nothing",
+        "points": 0
+    },
+    {
+        "round": 1,
+        "instructions": "Whack 5 sad moles.",
+        "points": 5
+    },
+    {
+        "round": 2,
+        "instructions": "Get 15 points. Don't whack the happy bouncy moles.",
+        "points": 15
+    },
+    {
+        "round": 3,
+        "instructions": "Get 30 points!",
+        "points": 30
+    },
+    {
+        "round": 4,
+        "instructions": "Squeeze pimples! Get 50 points.",
+        "points": 50
+    }
+]
+
 /* Leaderboard */
 
 var topScores = [];
@@ -112,7 +140,7 @@ base('Table 1').select({
 /* Create images */
 function createDivs() {
 
-    for (var i = 0; i <= 45; i++) {
+    for (var i = 0; i <= 35; i++) {
         var div = document.createElement('div');
         div.setAttribute('class','box');
         div.innerText = " ";
@@ -278,13 +306,14 @@ countdownTimer(2);
 
 function roundOne() {
 
-    alert("Whack 5 sad moles");
+    alert(roundInfo[1]["instructions"]);
 
     makeMoles(2200,2000);
     makeMoles(1500,3000);
     makeMoles(1000,4000);
     makeMoles(2800,2000);
     makeMoles(2000,3000);
+    makeMoles(2500,2000);
     makeMoles(1900,3000);
 
     var c = 0;
@@ -309,7 +338,7 @@ function roundOne() {
                     function message() {
                     console.log("Won");
                     round++;
-                    // setTimeout(roundTwo,1500);
+                    setTimeout(roundTwo,1500);
 
                     }
 
@@ -319,7 +348,7 @@ function roundOne() {
                 } else {
                     console.log("Failed.")
                     status = "lost";
-                    // gameOver();
+                    gameOver();
                 }
             }
 
@@ -332,7 +361,7 @@ function roundOne() {
 
 function roundTwo() {
 
-    alert("Get 15 points. Don't whack the bouncing happy moles!");
+    alert(roundInfo[2]["instructions"]);
 
 makeMoles(1000,4000);
 makeMoles(2000,3000);
@@ -397,7 +426,7 @@ makeHappyMoles(6500,3000);
 
 function roundThree() {
 
-alert("Get 30 points to get to the next round!");
+alert(roundInfo[3][instructions]);
 
 makeMoles(1000,4000);
 makeMoles(2000,3000);
@@ -427,14 +456,84 @@ makeHappyMoles(5500,3000);
 makeHappyMoles(6500,3000);
 makeHappyMoles(1500,2000);
 
-    // timedCount(21,30);
+ var c = 0;
+    var t;
+
+    function timedCount() {
+
+        if (c <= 9) {
+            document.getElementById("timer").innerText = "00:0" + c;
+        } else if (c > 9) {
+             document.getElementById("timer").innerText = "00:" + c;
+        }
+
+
+        c = c + 1;
+        t = setTimeout(timedCount, 1000);
+
+            if (c === 16) {
+            clearTimeout(t);
+
+                if (score >= 30) {
+                    function message() {
+                        console.log("Won");
+                    round++;
+                    setTimeout(roundFour,2000);
+                    }
+
+                    setTimeout(message,1000);
+
+
+                } else {
+                    console.log("Failed")
+                    gameOver();
+                }
+            }
+
+    }
+
+    timedCount();
+
 }
 
 function roundFour() {
-displayRound.innerText = "Round: " + round;
-roundMessage.innerText = "Squeeze the pimples! Get 50 points to get to the next round";
 
-makePimples(2000,3000);
+alert(roundInfo[4]["instructions"]);
+
+makeMoles(1000,2000);
+makeMoles(2000,2500);
+makeMoles(2500,2700);
+makeMoles(3000,1500);
+makeMoles(3500,2000);
+makeMoles(4000,2500);
+makeMoles(4500,1000);
+makeMoles(5000,3000);
+makeMoles(6300,1500);
+makeMoles(7000,2500);
+makeMoles(8000,1500);
+makeMoles(9000,2500);
+makeMoles(10500,2500);
+makeMoles(11000,1000);
+makeMoles(11500,1000);
+makeMoles(12000,1300);
+makeMoles(12500,2200);
+makeMoles(13000,2000);
+
+
+makePimples(2000,2000);
+makePimples(5000,1500);
+makePimples(8000,2000);
+makePimples(10000,3000);
+makePimples(12000,1500);
+
+makeHappyMoles(1500,2000);
+makeHappyMoles(3000,3000);
+makeHappyMoles(5500,3000);
+makeHappyMoles(6500,3000);
+makeHappyMoles(11700,2500);
+makeHappyMoles(12500,1300);
+
+
 
 }
 
