@@ -54,6 +54,15 @@ span {
 	font-family: 'Nunito', sans-serif;
 }
 
+#round {
+	font-weight: 900;
+	background-color: #000;
+	color: #FFF;
+	border-top-left-radius: 25px;
+	border-top-right-radius: 25px;
+	padding: 10px;
+}
+
 .point {
 	position: absolute;
 	font-size: 25px;
@@ -108,7 +117,7 @@ img {
 .game-over {
 	background-color: black;
 	width: 450px;
-	height: 500px;
+	height: 510px;
 	font-size: 20px;
 	margin: 2px auto;
 	padding: 20px;
@@ -150,6 +159,7 @@ th, td {
 	display: flex;
 	align-items: center;
 	padding: 10px 0 10px 0;
+	overflow: auto;
 }
 
 .retry-restart {
@@ -206,10 +216,10 @@ button:hover {
 .modal-content {
   background-color: #fefefe;
   margin: 10% auto; /* 15% from the top and centered */
-  padding: 30px;
+  padding: 0 5px 30px 5px;
   border: 1px solid #888;
   width: 55%; /* Could be more or less, depending on screen size */
-  border-radius: 25px;
+  border-radius: 24px;
 }
 
 /* The Close Button */
@@ -218,6 +228,7 @@ button:hover {
   float: right;
   font-size: 28px;
   font-weight: bold;
+  margin: 10px 15px 0 0;
 }
 
 .close:hover,
