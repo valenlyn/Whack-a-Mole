@@ -24,13 +24,14 @@ var roundInfo = [
         "instructions": "Whack 5 sad moles.",
         "points": 5,
         "timer": 5,
-        "img": "art/happy-mole.png"
+        "img": "art/sad-mole.png"
     },
     {
         "round": 2,
         "instructions": "Get 15 points. Don't whack the happy bouncy moles.",
         "points": 15,
-        "timer": 15
+        "timer": 15,
+        "img": "art/happy-mole.png"
     },
     {
         "round": 3,
@@ -55,9 +56,19 @@ var modal = document.getElementById('myModal');
 var span = document.getElementsByClassName("close")[0];
 
 // When the user clicks on the button, open the modal
-function showModal() {
+function showModal(roundNumber) {
   modal.style.display = "block";
+
+    document.getElementById('round').innerText = "Round " + roundInfo[roundNumber]["round"];
+    document.getElementById('instructions').innerText = roundInfo[roundNumber]["instructions"];
+    document.getElementById('example').src = roundInfo[roundNumber]["img"];
+
+    if (roundNumber === 2) {
+        document.getElementById('example').setAttribute('class','happy-mole');
+    }
+
 }
+
 
 // // When the user clicks on <span> (x), close the modal
 // span.onclick = function() {
@@ -343,17 +354,9 @@ function countdownTimer(pointsNeeded) {
 countdownTimer(2);
 
 
-
-
 function roundOne() {
 
-    // alert(roundInfo[1]["instructions"]);
-
-    showModal();
-    document.getElementById('round').innerText = "Round: " + roundInfo[1]["round"];
-    document.getElementById('instructions').innerText = roundInfo[1]["instructions"];
-    document.getElementById('example').src = roundInfo[1]["img"];
-
+    showModal(1);
 
     span.onclick = function() {
         modal.style.display = "none";
@@ -395,15 +398,8 @@ function roundOne() {
             clearTimeout(t);
 
                 if (score >= 5) {
-                    function message() {
-                    console.log("Won");
                     round++;
-                    setTimeout(roundTwo,1500);
-
-                    }
-
-                    setTimeout(message, 1000);
-
+                    roundTwo();
 
                 } else {
                     console.log("Failed.")
@@ -421,68 +417,77 @@ function roundOne() {
 
 function roundTwo() {
 
-    alert(roundInfo[2]["instructions"]);
+    showModal(2);
 
-makeMoles(1000,4000);
-makeMoles(2000,3000);
-makeMoles(2500,3000);
-makeMoles(3000,2500);
-makeMoles(3500,3000);
-makeMoles(4000,1500);
-makeMoles(4500,2000);
-makeMoles(5000,3000);
-makeMoles(6000,1500);
-makeMoles(6500,2000);
-makeMoles(7000,3000);
-makeMoles(7500,2000);
-makeMoles(8000,3000);
-makeMoles(8500,2300);
-makeMoles(9000,2000);
-makeMoles(9500,3000);
-makeMoles(10000,4000);
-makeMoles(11000,3000);
-
-makeHappyMoles(2000,3000);
-makeHappyMoles(5500,3000);
-makeHappyMoles(6500,3000);
-makeHappyMoles(10000,3000);
-makeHappyMoles(12000,1800);
-
-    var c = 0;
-    var t;
-
-    function timedCount() {
-
-        if (c <= 9) {
-            document.getElementById("timer").innerText = "00:0" + c;
-        } else if (c > 9) {
-             document.getElementById("timer").innerText = "00:" + c;
-        }
-
-
-        c = c + 1;
-        t = setTimeout(timedCount, 1000);
-
-            if (c === 16) {
-            clearTimeout(t);
-
-                if (score >= 15) {
-                    function message() {
-                        console.log("Won");
-                        round++;
-                        setTimeout(roundThree,2000);
-                    }
-
-                    setTimeout(message,1000);
-
-
-                } else {
-                    gameOver();
-                }
-            }
+    span.onclick = function() {
+        modal.style.display = "none";
+        startRound();
     }
 
-    timedCount();
+    window.onclick = function(event) {
+        if (event.target == modal) {
+                modal.style.display = "none";
+                startRound();
+        }
+    }
+
+function startRound() {
+    makeMoles(1000,4000);
+    makeMoles(2000,3000);
+    makeMoles(2500,3000);
+    makeMoles(3000,2500);
+    makeMoles(3500,3000);
+    makeMoles(4000,1500);
+    makeMoles(4500,2000);
+    makeMoles(5000,3000);
+    makeMoles(6000,1500);
+    makeMoles(6500,2000);
+    makeMoles(7000,3000);
+    makeMoles(7500,2000);
+    makeMoles(8000,3000);
+    makeMoles(8500,2300);
+    makeMoles(9000,2000);
+    makeMoles(9500,3000);
+    makeMoles(10000,4000);
+    makeMoles(11000,3000);
+
+    makeHappyMoles(2000,3000);
+    makeHappyMoles(5500,3000);
+    makeHappyMoles(6500,3000);
+    makeHappyMoles(10000,3000);
+    makeHappyMoles(12000,1800);
+
+        var c = 0;
+        var t;
+
+        function timedCount() {
+
+            if (c <= 9) {
+                document.getElementById("timer").innerText = "00:0" + c;
+            } else if (c > 9) {
+                 document.getElementById("timer").innerText = "00:" + c;
+            }
+
+
+            c = c + 1;
+            t = setTimeout(timedCount, 1000);
+
+                if (c === 16) {
+                clearTimeout(t);
+
+                    if (score >= 15) {
+                            console.log("Won");
+                            round++;
+                            roundThree();
+
+                    } else {
+                        gameOver();
+                    }
+                }
+        }
+
+        timedCount();
+}
 
 }
 
