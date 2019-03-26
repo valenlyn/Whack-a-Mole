@@ -246,6 +246,11 @@ function restartGame() {
 
 function gameOver() {
 
+// hide game
+var game = document.getElementById('main');
+game.setAttribute('style','background-image:url("")');
+
+
         var gameOverPopUp = document.getElementsByClassName('game-over')[0];
         gameOverPopUp.setAttribute('style','display:inline-block');
         getAirtableRecords();
