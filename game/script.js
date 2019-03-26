@@ -90,6 +90,7 @@ const nameInput = document.querySelector('input');
 nameInput.addEventListener('keydown', function onEvent(event) {
     if (event.key === "Enter") {
         getInput();
+        nameInput.parentNode.remove();
     }
 });
 
@@ -106,15 +107,15 @@ function getInput() {
 });
 
 // When there's time, loop through the scores, get position, and do insertBefore instead of removing the entire table
-
     var oldScoreBoard = document.querySelector('table');
     var scoreBoardNames = oldScoreBoard.getElementsByTagName('tr');
+    var currentTable = document.getElementsByTagName('tr');
 
     for (var i = scoreBoardNames.length -1; i > 0; i--) {
         oldScoreBoard.removeChild(scoreBoardNames[i]);
     }
 
-        getAirtableRecords();
+    getAirtableRecords();
 
 }
 
@@ -122,6 +123,28 @@ function getInput() {
 var Airtable = require('airtable');
 var base = new Airtable({apiKey: 'keyS3h9yowOlUCiPJ'}).base('appEpG8UUPlhXYBpU');
 
+function getHighScores() {
+    base('Table 1').select({
+    // Selecting the first 3 records in Grid view:
+    maxRecords: 10,
+    view: "Grid view",
+    sort: [{field: "Score", direction:"desc"}]
+}).eachPage(function page(records, fetchNextPage) {
+    // This function (`page`) will get called for each page of records.
+
+    records.forEach(function(record) {
+        console.log('Retrieved', record.get('Name'), record.get('Score'));
+        var name = record.get('Name');
+        var record = record.get('Score');
+        topScores.push(record);
+    });
+
+    fetchNextPage();
+
+    }, function done(err) {
+        if (err) { console.error(err); return; }
+    });
+}
 
 function getAirtableRecords() {
 //Get all records from table 1
@@ -133,11 +156,16 @@ base('Table 1').select({
 }).eachPage(function page(records, fetchNextPage) {
     // This function (`page`) will get called for each page of records.
 
+    records.forEach(function(record) {
+        console.log('Retrieved', record.get('Name'), record.get('Score'));
+        var name = record.get('Name');
+        var record = record.get('Score');
+        topScores.push(record);
 
- var leaderboard = document.getElementsByClassName('leaderboard')[0];
+        var leaderboard = document.getElementsByClassName('leaderboard')[0];
 
      var createTable = document.createElement('table');
-    createTable.setAttribute('id','top-scorers');
+     createTable.setAttribute('id','top-scorers');
         var createPlaceholder = document.createElement('tr');
             var createPlaceHolderName = document.createElement('th');
             createPlaceHolderName.innerText = "Name";
@@ -146,12 +174,6 @@ base('Table 1').select({
             createPlaceholderScore.innerText = "Score";
             createPlaceholder.appendChild(createPlaceholderScore);
                 createTable.appendChild(createPlaceholder);
-
-    records.forEach(function(record) {
-        console.log('Retrieved', record.get('Name'), record.get('Score'));
-        var name = record.get('Name');
-        var record = record.get('Score');
-        topScores.push(record);
 
         var addTable = document.createElement('tr');
         var addName = document.createElement('td');
@@ -163,6 +185,7 @@ base('Table 1').select({
 
         var topScoreTable = document.getElementById('top-scorers');
         topScoreTable.appendChild(addTable);
+
     });
 
     fetchNextPage();
@@ -275,6 +298,8 @@ function restartGame() {
     window.location.reload();
 }
 
+
+
 function gameOver() {
 
 // hide game
@@ -282,19 +307,28 @@ function gameOver() {
     game.setAttribute('style','background-image:url("")');
     document.getElementsByClassName('info')[0].setAttribute('style','display:none');
 
-
+    // show game over "modal"
         var gameOverPopUp = document.getElementsByClassName('game-over')[0];
         gameOverPopUp.setAttribute('style','display:flex');
+
         getAirtableRecords();
 
         var gameMsg = document.getElementsByClassName('message')[0];
 
 
-    if ( (score >= Math.min(...topScores)) || (topScores.length <= 10)) {
+    if (score === 0) {
+        gameMsg.innerText = "Sorry, you lost!";
+        console.log("score is 0");
+    } else if (score < Math.min(...topScores)) {
+        console.log(topScores);
+        console.log(Math.min(...topScores));
+         gameMsg.innerText = "Sorry, you lost!";
+    } else if (score === Math.min(...topScores)) {
         gameMsg.innerText = "New high score!";
         document.getElementsByClassName('input-button')[0].setAttribute('style','display:flex');
-    } else {
-         gameMsg.innerText = "Sorry you lost!";
+    } else if (score > Math.min(...topScores)) {
+        gameMsg.innerText = "New high score!";
+        document.getElementsByClassName('input-button')[0].setAttribute('style','display:flex');
     }
 
 
@@ -320,7 +354,9 @@ function countdownTimer(pointsNeeded) {
 
         c = c - 1;
 
-        t = setTimeout(countdownTimer, 1000);
+        t = setTimeout(function(){
+            countdownTimer(45);
+        }, 1000);
 
             if (c === -1) {
 
@@ -391,7 +427,6 @@ function roundOne() {
                     roundTwo();
 
                 } else {
-                    console.log("Failed.")
                     status = "lost";
                     gameOver();
                 }
@@ -446,6 +481,7 @@ function roundTwo() {
     makeHappyMoles(6500,3000);
     makeHappyMoles(10000,3000);
     makeHappyMoles(12000,1800);
+    makeHappyMoles(12500,2500);
 
     var c = 15;
     var t;
@@ -470,7 +506,6 @@ function roundTwo() {
                     roundThree();
 
                 } else {
-                    status = "lost";
                     gameOver();
                 }
             }
@@ -479,7 +514,6 @@ function roundTwo() {
 
     timedCount();
     }
-
 }
 
 function roundThree() {
@@ -510,21 +544,22 @@ function roundThree() {
     makeMoles(6000,1500);
     makeMoles(6500,2000);
     makeMoles(7000,3000);
-    makeMoles(7500,2000);
     makeMoles(8000,3000);
     makeMoles(8500,2300);
     makeMoles(9000,2000);
     makeMoles(9500,3000);
     makeMoles(10000,4000);
     makeMoles(11000,3000);
+    makeMoles(12000,2500);
 
     makeHappyMoles(2000,3000);
     makeHappyMoles(5500,3000);
     makeHappyMoles(6500,3000);
     makeHappyMoles(10000,3000);
     makeHappyMoles(12000,1800);
+    makeHappyMoles(13000,1800);
 
-    var c = 0;
+    var c = 15;
     var t;
 
     function timedCount() {
@@ -536,13 +571,13 @@ function roundThree() {
         }
 
 
-        c = c + 1;
+        c = c - 1;
         t = setTimeout(timedCount, 1000);
 
-            if (c === 16) {
+            if (c === -1) {
             clearTimeout(t);
 
-                if (score >= 15) {
+                if (score >= 30) {
                     round++;
                     roundFour();
 
@@ -691,3 +726,5 @@ switch (round) {
     default:
     play = console.log("No game");
 }
+
+getHighScores();

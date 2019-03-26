@@ -116,14 +116,15 @@ img {
 .game-over {
 	background-color: black;
 	width: 82%;
-	height: 515px;
+	height: 520px;
 	font-size: 20px;
-	margin: 2px auto;
+	margin: 1px auto;
 	padding: 20px;
 	position: absolute;
 	flex-direction: column;
 	align-items: center;
 	align-content: stretch;
+	justify-content: space-evenly;
 	display: none;
 	color: white;
 	font-family: 'Nunito', sans-serif;
@@ -159,6 +160,7 @@ th, td {
 	align-items: center;
 	padding: 10px 0 10px 0;
 	overflow: auto;
+	margin: 3px 0 3px 0;
 }
 
 .retry-restart {
@@ -170,6 +172,7 @@ th, td {
 .message {
 	text-align: center;
 	font-size: 30px;
+	font-weight: 700;
 }
 
 input {
@@ -181,14 +184,17 @@ input {
 }
 
 button {
+	font-family: 'Nunito', sans-serif;
 	font-size: 25px;
+	font-weight: 700;
 	padding: 10px 15px 10px 15px;
-	border-radius: 15px
+	border-radius: 15px;
 }
 
 button:hover {
 	background: #000;
 	color: #FFF;
+	padding: 10px 15px 10px 15px;
 	border: none;
 }
 
