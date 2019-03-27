@@ -274,15 +274,7 @@ footer {
 		background-image: cover;
 		height: 900px;
 		width: 700px;
-	}
-
-	.box {
-		background-color: transparent;
-		display: inline-block;
-		width: 87px;
-		height: 82px;
-		display: inline-flex;
-		justify-content: center;
+		margin: 20px auto;
 	}
 
 	.modal-content {
@@ -293,4 +285,24 @@ footer {
 	  width: 55%; /* Could be more or less, depending on screen size */
 	  border-radius: 28px;
 	}
+
+	.game-over {
+		background-color: black;
+		width: 82%;
+		height: 85%;
+		font-size: 20px;
+		margin: 5px auto;
+		padding: 20px;
+		position: absolute;
+		flex-direction: column;
+		align-items: center;
+		align-content: stretch;
+		justify-content: space-evenly;
+		display: none;
+		color: white;
+		font-family: 'Nunito', sans-serif;
+		border-radius: 25px;
+	}
+
+
 }

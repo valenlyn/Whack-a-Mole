@@ -1,7 +1,7 @@
 console.log("Linked");
 
 var score = 0;
-var round = 6;
+var round = 1;
 var status = "";
 
 var info = document.getElementsByClassName('info')[0];
@@ -71,6 +71,9 @@ var modal = document.getElementById('myModal');
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
+
+// Get image in DOM
+var exampleImg = modal.getElementsByTagName('img')[0];
 
 // When the user clicks on the button, open the modal
 function showModal(roundNumber) {
@@ -372,6 +375,10 @@ function timedCount() {
 }
 
 
+function buttonHide() {
+    modal.style.display = "none";
+}
+
 function roundOne() {
 
     roundDisplay.innerText = "Round: " + round;
@@ -389,8 +396,10 @@ function roundOne() {
         }
     }
 
-    function startRound() {
+    exampleImg.addEventListener('click',buttonHide);
+    exampleImg.addEventListener('click',startRound);
 
+    function startRound() {
 
         for (var i = 0; i < (roundInfo[round]["timer"] * 1.5); i++) {
 
