@@ -111,7 +111,7 @@ function getInput() {
         oldScoreBoard.removeChild(scoreBoardNames[i]);
     }
 
-    setTimeout(getAirtableRecords,100);
+    // setTimeout(getAirtableRecords,100);
 
 }
 
@@ -305,7 +305,7 @@ function gameOver() {
         var gameOverPopUp = document.getElementsByClassName('game-over')[0];
         gameOverPopUp.setAttribute('style','display:flex');
 
-        getAirtableRecords();
+        // getAirtableRecords();
 
         var gameMsg = document.getElementsByClassName('message')[0];
 
@@ -331,45 +331,40 @@ function gameOver() {
 
 }
 
+    var c = roundInfo[round]["timer"];
+    var t;
 
-// 😭😭😭😭😭😭😭
 
-var c = 5;
-var t;
-
-function countdownTimer(pointsNeeded) {
+function timedCount() {
 
         if (c <= 9) {
-            document.getElementById("timer").innerText = "00:0" + c;
+            document.getElementById("displayTimer").innerText = "00:0" + c;
         } else if (c > 9) {
-             document.getElementById("timer").innerText = "00:" + c;
+             document.getElementById("displayTimer").innerText = "00:" + c;
         }
 
-
         c = c - 1;
-
         t = setTimeout(function(){
-            countdownTimer(45);
+
+        timedCount();
+
         }, 1000);
 
-            if (c === -1) {
-
+        if (c === -1) {
             clearTimeout(t);
-                if (score >= pointsNeeded) {
-                    function message() {
-                        console.log("Won");
+
+                if (score >= roundInfo[round]["points"]) {
                     round++;
-                    }
-
-                    setTimeout(message,1000);
-
+                    continueRound();
+                    c = roundInfo[round]["timer"];
 
                 } else {
-                    console.log("Failed")
+                    gameOver();
                 }
+
+        }
+    return round;
 }
-}
-countdownTimer(2);
 
 
 function roundOne() {
@@ -398,37 +393,8 @@ function roundOne() {
     makeMoles(2500,3000);
     makeMoles(1900,4000);
 
-    var c = 5;
-    var t;
-
-    function timedCount() {
-
-        if (c <= 9) {
-            document.getElementById("displayTimer").innerText = "00:0" + c;
-        } else if (c > 9) {
-             document.getElementById("displayTimer").innerText = "00:" + c;
-        }
-
-
-        c = c - 1;
-        t = setTimeout(timedCount, 1000);
-
-            if (c === -1) {
-            clearTimeout(t);
-
-                if (score >= 5) {
-                    round++;
-                    roundTwo();
-
-                } else {
-                    status = "lost";
-                    gameOver();
-                }
-            }
-
-    }
-
     timedCount();
+
     }
 
 }
@@ -477,36 +443,8 @@ function roundTwo() {
     makeHappyMoles(12000,1800);
     makeHappyMoles(12500,2500);
 
-    var c = 15;
-    var t;
-
-    function timedCount() {
-
-        if (c <= 9) {
-            document.getElementById("displayTimer").innerText = "00:0" + c;
-        } else if (c > 9) {
-             document.getElementById("displayTimer").innerText = "00:" + c;
-        }
-
-
-        c = c - 1;
-        t = setTimeout(timedCount, 1000);
-
-            if (c === -1) {
-            clearTimeout(t);
-
-                if (score >= 15) {
-                    round++;
-                    roundThree();
-
-                } else {
-                    gameOver();
-                }
-            }
-
-    }
-
     timedCount();
+
     }
 }
 
@@ -553,172 +491,145 @@ function roundThree() {
     makeHappyMoles(12000,1800);
     makeHappyMoles(13000,1800);
 
-    var c = 15;
-    var t;
-
-    function timedCount() {
-
-        if (c <= 9) {
-            document.getElementById("timer").innerText = "00:0" + c;
-        } else if (c > 9) {
-             document.getElementById("timer").innerText = "00:" + c;
-        }
-
-
-        c = c - 1;
-        t = setTimeout(timedCount, 1000);
-
-            if (c === -1) {
-            clearTimeout(t);
-
-                if (score >= 30) {
-                    round++;
-                    roundFour();
-
-                } else {
-                    status = "lost";
-                    gameOver();
-                }
-            }
-
-    }
-
     timedCount();
     }
 
 }
 
 
-function roundFour() {
+// function roundFour() {
 
-showModal(4);
+// showModal(4);
 
-    span.onclick = function() {
-        modal.style.display = "none";
-        startRound();
+//     span.onclick = function() {
+//         modal.style.display = "none";
+//         startRound();
+//     }
+
+//     window.onclick = function(event) {
+//         if (event.target == modal) {
+//                 modal.style.display = "none";
+//                 startRound();
+//         }
+//     }
+
+// function startRound() {
+//     makeMoles(1000,2000);
+//     makeMoles(2000,2500);
+//     makeMoles(2500,2700);
+//     makeMoles(3000,1500);
+//     makeMoles(3500,2000);
+//     makeMoles(4000,2500);
+//     makeMoles(4500,1000);
+//     makeMoles(5000,3000);
+//     makeMoles(6300,1500);
+//     makeMoles(7000,2500);
+//     makeMoles(8000,1500);
+//     makeMoles(9000,2500);
+//     makeMoles(10500,2500);
+//     makeMoles(11000,1000);
+//     makeMoles(11500,1000);
+//     makeMoles(12000,1300);
+//     makeMoles(12500,2200);
+//     makeMoles(13000,2000);
+
+//     makePimples(2000,2000);
+//     makePimples(5000,1500);
+//     makePimples(8000,2000);
+//     makePimples(10000,3000);
+//     makePimples(12000,1500);
+
+//     makeHappyMoles(1500,2000);
+//     makeHappyMoles(3000,3000);
+//     makeHappyMoles(5500,3000);
+//     makeHappyMoles(6500,3000);
+//     makeHappyMoles(11700,2500);
+//     makeHappyMoles(12500,1300);
+
+//     var c = 0;
+//         var t;
+
+//         function timedCount() {
+
+//             if (c <= 9) {
+//                 document.getElementById("timer").innerText = "00:0" + c;
+//             } else if (c > 9) {
+//                  document.getElementById("timer").innerText = "00:" + c;
+//             }
+
+
+//             c = c + 1;
+//             t = setTimeout(timedCount, 1000);
+
+//                 if (c === 16) {
+//                 clearTimeout(t);
+
+//                     if (score >= 50) {
+//                         round++;
+//                         roundFive();
+//                         }
+
+
+//                     } else {
+//                         gameOver();
+//                     }
+//                 }
+
+//         }
+
+//         timedCount();
+// }
+
+
+
+// function roundFive() {
+
+// showModal(5);
+
+//     span.onclick = function() {
+//         modal.style.display = "none";
+//         startRound();
+//     }
+
+//     window.onclick = function(event) {
+//         if (event.target == modal) {
+//                 modal.style.display = "none";
+//                 startRound();
+//         }
+//     }
+
+
+// function startRound() {
+
+// // random number between 1000 and 4000
+//     var randomInterval = Math.floor(Math.random() * ((4000-1000)+1) + 4000);
+
+//     for (var i = 0; i < 1000; i++) {
+//         makeMoles(i * 1000,randomInterval);
+//     }
+
+// }
+
+// }
+
+function continueRound(){
+    switch (round) {
+        case 1:
+        play = roundOne();
+        break;
+        case 2:
+        play = roundTwo();
+        break;
+        case 3:
+        play = roundThree();
+        break;
+        case 4:
+        play = roundFour();
+        default:
+        play = console.log("No game");
     }
 
-    window.onclick = function(event) {
-        if (event.target == modal) {
-                modal.style.display = "none";
-                startRound();
-        }
-    }
-
-function startRound() {
-    makeMoles(1000,2000);
-    makeMoles(2000,2500);
-    makeMoles(2500,2700);
-    makeMoles(3000,1500);
-    makeMoles(3500,2000);
-    makeMoles(4000,2500);
-    makeMoles(4500,1000);
-    makeMoles(5000,3000);
-    makeMoles(6300,1500);
-    makeMoles(7000,2500);
-    makeMoles(8000,1500);
-    makeMoles(9000,2500);
-    makeMoles(10500,2500);
-    makeMoles(11000,1000);
-    makeMoles(11500,1000);
-    makeMoles(12000,1300);
-    makeMoles(12500,2200);
-    makeMoles(13000,2000);
-
-    makePimples(2000,2000);
-    makePimples(5000,1500);
-    makePimples(8000,2000);
-    makePimples(10000,3000);
-    makePimples(12000,1500);
-
-    makeHappyMoles(1500,2000);
-    makeHappyMoles(3000,3000);
-    makeHappyMoles(5500,3000);
-    makeHappyMoles(6500,3000);
-    makeHappyMoles(11700,2500);
-    makeHappyMoles(12500,1300);
-
-    var c = 0;
-        var t;
-
-        function timedCount() {
-
-            if (c <= 9) {
-                document.getElementById("timer").innerText = "00:0" + c;
-            } else if (c > 9) {
-                 document.getElementById("timer").innerText = "00:" + c;
-            }
-
-
-            c = c + 1;
-            t = setTimeout(timedCount, 1000);
-
-                if (c === 16) {
-                clearTimeout(t);
-
-                    if (score >= 50) {
-                        round++;
-                        roundFive();
-                        }
-
-
-                    } else {
-                        gameOver();
-                    }
-                }
-
-        }
-
-        timedCount();
 }
 
-
-
-function roundFive() {
-
-showModal(5);
-
-    span.onclick = function() {
-        modal.style.display = "none";
-        startRound();
-    }
-
-    window.onclick = function(event) {
-        if (event.target == modal) {
-                modal.style.display = "none";
-                startRound();
-        }
-    }
-
-
-function startRound() {
-
-// random number between 1000 and 4000
-    var randomInterval = Math.floor(Math.random() * ((4000-1000)+1) + 4000);
-
-    for (var i = 0; i < 1000; i++) {
-        makeMoles(i * 1000,randomInterval);
-    }
-
-}
-
-}
-
-
-switch (round) {
-    case 1:
-    play = roundOne();
-    break;
-    case 2:
-    play = roundTwo();
-    break;
-    case 3:
-    play = roundThree();
-    break;
-    case 4:
-    play = roundFour();
-    default:
-    play = console.log("No game");
-}
-
-getHighScores();
+continueRound();
+// getHighScores();
