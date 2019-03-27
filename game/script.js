@@ -58,7 +58,7 @@ var roundInfo = [
     {
         "round": 6,
         "instructions": "Get 300 points!",
-        "points": 200,
+        "points": 300,
         "timer": 20,
         "img": "art/happy-mole.png"
     }
@@ -323,6 +323,9 @@ function gameOver() {
         console.log(topScores);
         console.log(Math.min(...topScores));
          gameMsg.innerText = "Sorry, you lost!";
+    } else {
+        gameMsg.innerText = "New high score!";
+        document.getElementsByClassName('input-button')[0].setAttribute('style','display:flex');
     }
 
 
@@ -708,4 +711,4 @@ function startGame(){
 }
 
 startGame();
-// getHighScores();
+getHighScores();
