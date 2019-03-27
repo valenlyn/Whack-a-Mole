@@ -5,9 +5,6 @@ var round = 1;
 var status = "";
 
 var info = document.getElementsByClassName('info')[0];
-// var displayScore = document.createElement('p');
-// displayScore.innerText = "Score: " + score;
-// info.appendChild(displayScore);
 
 var roundDisplay = document.getElementById('displayRound');
 
@@ -106,7 +103,6 @@ function getInput() {
     console.log(record.getId());
 });
 
-// When there's time, loop through the scores, get position, and do insertBefore instead of removing the entire table
     var oldScoreBoard = document.querySelector('table');
     var scoreBoardNames = oldScoreBoard.getElementsByTagName('tr');
     var currentTable = document.getElementsByTagName('tr');
@@ -115,7 +111,7 @@ function getInput() {
         oldScoreBoard.removeChild(scoreBoardNames[i]);
     }
 
-    setTimeout(getAirtableRecords,400);
+    setTimeout(getAirtableRecords,100);
 
 }
 
@@ -226,7 +222,6 @@ function createDivs() {
         div.appendChild(pimples);
 
     }
-
 }
 
 createDivs();
@@ -301,7 +296,6 @@ function restartGame() {
 
 
 function gameOver() {
-
 // hide game
     var game = document.getElementById('main');
     game.setAttribute('style','background-image:url("")');
@@ -319,16 +313,16 @@ function gameOver() {
     if (score === 0) {
         gameMsg.innerText = "Sorry, you lost!";
         console.log("score is 0");
+    } else if (score === Math.min(...topScores)) {
+        gameMsg.innerText = "New high score!";
+        document.getElementsByClassName('input-button')[0].setAttribute('style','display:flex');
+    } else if (score > Math.min(...topScores) || (topScores.length <= 9)) {
+        gameMsg.innerText = "New high score!";
+        document.getElementsByClassName('input-button')[0].setAttribute('style','display:flex');
     } else if (score < Math.min(...topScores)) {
         console.log(topScores);
         console.log(Math.min(...topScores));
          gameMsg.innerText = "Sorry, you lost!";
-    } else if (score === Math.min(...topScores)) {
-        gameMsg.innerText = "New high score!";
-        document.getElementsByClassName('input-button')[0].setAttribute('style','display:flex');
-    } else if (score > Math.min(...topScores)) {
-        gameMsg.innerText = "New high score!";
-        document.getElementsByClassName('input-button')[0].setAttribute('style','display:flex');
     }
 
 
