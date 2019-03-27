@@ -300,6 +300,9 @@ function gameOver() {
     game.setAttribute('style','background-image:url("")');
     document.getElementsByClassName('info')[0].setAttribute('style','display:none');
 
+    var footer = document.getElementsByTagName('footer')[0];
+    footer.setAttribute('style','display:none');
+
 
     // show game over "modal"
         var gameOverPopUp = document.getElementsByClassName('game-over')[0];
@@ -322,7 +325,7 @@ function gameOver() {
     } else if (score < Math.min(...topScores)) {
         console.log(topScores);
         console.log(Math.min(...topScores));
-         gameMsg.innerText = "Sorry, you lost!";
+         gameMsg.innerText = "Sorry, you lost!\n Your score: " +score;
     } else {
         gameMsg.innerText = "New high score!";
         document.getElementsByClassName('input-button')[0].setAttribute('style','display:flex');
