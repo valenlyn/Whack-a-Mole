@@ -1,7 +1,7 @@
 console.log("Linked");
 
 var score = 0;
-var round = 1;
+var round = 6;
 var status = "";
 
 var info = document.getElementsByClassName('info')[0];

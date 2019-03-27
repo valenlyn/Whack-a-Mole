@@ -264,29 +264,33 @@ footer {
   cursor: pointer;
 }
 
-@media only screen and (max-width: 768px) {
-/* mobile */
+@media only screen and (orientation: portrait) {
 	body {
-	  background-color: #FFCBD3;
-	}
-
-	.game-over {
-		width: 80%;
-		height: 80%;
+		background-color: #FFFFFF;
 	}
 
 	#main {
-		background-image: url('art/face-portrait.png');
-		background-size: contain;
-		background-repeat: no-repeat;
-		padding: 10px 30px;
-		margin: 10px auto;
-		position: relative;
-}
-
-	footer {
-		width: 70%;
-		height: 20%;
+		background-image: url('art/long-face.png');
+		background-image: cover;
+		height: 900px;
+		width: 700px;
 	}
 
+	.box {
+		background-color: transparent;
+		display: inline-block;
+		width: 87px;
+		height: 82px;
+		display: inline-flex;
+		justify-content: center;
+	}
+
+	.modal-content {
+	  background-color: #fefefe;
+	  margin: 30% auto; /* 15% from the top and centered */
+	  padding: 0 5px 30px 5px;
+	  border: 1px solid #888;
+	  width: 55%; /* Could be more or less, depending on screen size */
+	  border-radius: 28px;
+	}
 }
