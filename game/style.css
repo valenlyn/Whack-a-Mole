@@ -114,6 +114,12 @@ img {
 	animation-iteration-count: infinite;
 }
 
+.red-happy-mole {
+	animation: bounce 0.5s;
+	animation-direction: alternate;
+	animation-iteration-count: infinite;
+}
+
 .game-over {
 	background-color: black;
 	width: 82%;

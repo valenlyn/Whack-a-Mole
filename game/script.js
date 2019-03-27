@@ -1,7 +1,7 @@
 console.log("Linked");
 
-var score = 5;
-var round = 2;
+var score = 0;
+var round = 6;
 var status = "";
 
 var info = document.getElementsByClassName('info')[0];
@@ -11,7 +11,7 @@ var roundDisplay = document.getElementById('displayRound');
 var area = document.getElementById('main');
 var boxes = [];
 
-var typies = ["mole", "happy-mole", "pimple"];
+var typies = ["mole", "happy-mole", "pimple", "red-happy-mole"];
 
 var roundInfo = [
     {
@@ -45,14 +45,22 @@ var roundInfo = [
         "round": 4,
         "instructions": "Rack up 50 points \n Avoid the red happy moles",
         "points": 50,
-        "timer": 20,
+        "timer": 15,
         "img": "art/red-happy-mole.png"
     },
     {
         "round": 5,
-        "instructions": "Whack!",
-        "points": 1000000,
-        "timer": 1000000
+        "instructions": "Get 100 points!",
+        "points": 100,
+        "timer": 20,
+        "img": "art/sad-mole.png"
+    },
+    {
+        "round": 6,
+        "instructions": "Get 300 points!",
+        "points": 200,
+        "timer": 20,
+        "img": "art/happy-mole.png"
     }
 ];
 
@@ -113,7 +121,7 @@ function getInput() {
         oldScoreBoard.removeChild(scoreBoardNames[i]);
     }
 
-    // setTimeout(getAirtableRecords,100);
+    setTimeout(getAirtableRecords,300);
 
 }
 
@@ -223,6 +231,12 @@ function createDivs() {
         pimples.setAttribute('class','pimple')
         div.appendChild(pimples);
 
+        var redMoles = document.createElement('img');
+        redMoles.setAttribute('src','art/red-happy-mole.png');
+        redMoles.setAttribute('style','width:50px;height:50px;display:none');
+        redMoles.setAttribute('class','red-happy-mole')
+        div.appendChild(redMoles);
+
     }
 }
 
@@ -251,6 +265,11 @@ function hit() {
         score += 5;
         scoreDisplay.innerText = "Score: " + score;
         pointDisplay.innerText = "+5";
+    } else if (event.target.classList[0] === "red-happy-mole") {
+        score -= 5;
+        scoreDisplay.innerText = "Score: " + score;
+        pointDisplay.setAttribute('style','color:red');
+        pointDisplay.innerText = "-10";
     }
 
 
@@ -270,39 +289,6 @@ function makeClickies(type,timeToAppear,timeToDisappear) {
     },timeToAppear)
 }
 
-// function makeMoles(timeToAppear,timeToDisappear) {
-//     setTimeout(function(){
-//         var randomNumber = Math.floor(Math.random() * 35) + 1;
-//     document.getElementsByClassName('mole')[randomNumber].setAttribute('style','display:inline');
-//     document.getElementsByClassName('mole')[randomNumber].addEventListener('click',hit);
-
-//     setTimeout(function(){
-//         document.getElementsByClassName('mole')[randomNumber].setAttribute('style','display:none')}, timeToDisappear);
-//     },timeToAppear)
-// }
-
-function makeHappyMoles(timeToAppear,timeToDisappear) {
-    setTimeout(function(){
-            var randomNumber = Math.floor(Math.random() * 35) + 1;
-    document.getElementsByClassName('happy-mole')[randomNumber].setAttribute('style','display:inline');
-    document.getElementsByClassName('happy-mole')[randomNumber].addEventListener('click',hit);
-
-    setTimeout(function(){
-        document.getElementsByClassName('happy-mole')[randomNumber].setAttribute('style','display:none')}, timeToDisappear);
-},timeToAppear)
-}
-
-function makePimples(timeToAppear,timeToDisappear) {
-    setTimeout(function(){
-            var randomNumber = Math.floor(Math.random() * 30) + 1;
-    document.getElementsByClassName('pimple')[randomNumber].setAttribute('style','display:inline');
-    document.getElementsByClassName('pimple')[randomNumber].addEventListener('click',hit);
-
-    setTimeout(function(){
-        document.getElementsByClassName('pimple')[randomNumber].setAttribute('style','display:none')}, timeToDisappear);
-},timeToAppear)
-}
-
 function restartGame() {
     window.location.reload();
 }
@@ -319,7 +305,7 @@ function gameOver() {
         var gameOverPopUp = document.getElementsByClassName('game-over')[0];
         gameOverPopUp.setAttribute('style','display:flex');
 
-        // getAirtableRecords();
+        getAirtableRecords();
 
         var gameMsg = document.getElementsByClassName('message')[0];
 
@@ -416,7 +402,7 @@ function roundOne() {
 }
 
 
-function roundTwo() {
+function roundTwo() { //bouncy
 
     roundDisplay.innerText = "Round: " + round;
     showModal(2);
@@ -435,10 +421,7 @@ function roundTwo() {
 
     function startRound() {
 
-        // var randomInterval = (Math.floor(Math.random() * 4000) + 1000);
-
         var randomInterval;
-
 
         for (var i = 0; i < ((roundInfo[round]["timer"]*2)-1); i++) {
 
@@ -463,30 +446,19 @@ function roundTwo() {
         var randomNum = getRandom();
         var randomTypie = typies[Math.floor(randomNum)];
 
-
-
             makeClickies(randomTypie,i * 500,randomInterval);
-                console.log(randomTypie);
-                console.log(i * 500);
-                console.log(randomInterval);
+
 
         }
-
-
-    // makeHappyMoles(2000,3000);
-    // makeHappyMoles(5500,3000);
-    // makeHappyMoles(6500,3000);
-    // makeHappyMoles(10000,3000);
-    // makeHappyMoles(12000,1800);
-    // makeHappyMoles(12500,2500);
 
     timedCount();
 
     }
 }
 
-function roundThree() {
+function roundThree() { //pimple
 
+    roundDisplay.innerText = "Round: " + round;
     showModal(3);
 
     span.onclick = function() {
@@ -502,37 +474,37 @@ function roundThree() {
     }
 
     function startRound() {
-    makeMoles(1000,2000);
-    makeMoles(2000,2500);
-    makeMoles(2500,2700);
-    makeMoles(3000,1500);
-    makeMoles(3500,2000);
-    makeMoles(4000,2500);
-    makeMoles(4500,1000);
-    makeMoles(5000,3000);
-    makeMoles(6300,1500);
-    makeMoles(7000,2500);
-    makeMoles(8000,1500);
-    makeMoles(9000,2500);
-    makeMoles(10500,2500);
-    makeMoles(11000,1000);
-    makeMoles(11500,1000);
-    makeMoles(12000,1300);
-    makeMoles(12500,2200);
-    makeMoles(13000,2000);
 
-    makePimples(2000,2000);
-    makePimples(5000,1500);
-    makePimples(8000,2000);
-    makePimples(10000,3000);
-    makePimples(12000,1500);
+        var randomInterval;
 
-    makeHappyMoles(1500,2000);
-    makeHappyMoles(3000,3000);
-    makeHappyMoles(5500,3000);
-    makeHappyMoles(6500,3000);
-    makeHappyMoles(11700,2500);
-    makeHappyMoles(12500,1300);
+        for (var i = 0; i < ((roundInfo[round]["timer"]*2)-1); i++) {
+
+            function setInterval() {
+                if (i < (roundInfo[round]["timer"]*0.5)) {
+                    randomInterval = (Math.floor(Math.random() * 4000) + 2000);
+                } else {
+                    randomInterval = (Math.floor(Math.random() * 3000) + 1000);
+                }
+            }
+
+            setInterval();
+
+
+        function getRandom(){
+          var num=Math.random();
+          if(num < 0.15) return 2;
+          else if (num > 0.85) return 1;
+          else if(num >= 0.35) return 0;
+          else return 0;
+        }
+
+        var randomNum = getRandom();
+        var randomTypie = typies[Math.floor(randomNum)];
+
+            makeClickies(randomTypie,i * 500,randomInterval);
+
+
+        }
 
     timedCount();
     }
@@ -542,7 +514,8 @@ function roundThree() {
 
 function roundFour() {
 
-showModal(4);
+    roundDisplay.innerText = "Round: " + round;
+    showModal(4);
 
     span.onclick = function() {
         modal.style.display = "none";
@@ -556,44 +529,157 @@ showModal(4);
         }
     }
 
-function startRound() {
+    function startRound() {
+
+        var randomInterval;
+
+            for (var i = 0; i < ((roundInfo[round]["timer"]*2)-1); i++) {
+
+                function setInterval() {
+                    if (i < (roundInfo[round]["timer"]*0.5)) {
+                        randomInterval = (Math.floor(Math.random() * 4000) + 2000);
+                    } else {
+                        randomInterval = (Math.floor(Math.random() * 2500) + 1000);
+                    }
+                }
+
+                setInterval();
 
 
-        timedCount();
-    }
+            function getRandom(){
+              var num=Math.random();
+              if(num < 0.15) return 2;
+              else if (num > 0.9) return 3;
+              else if (num > 0.75) return 1;
+              // else if (num >= 0.35) return 0;
+              else return 0;
+            }
+
+            var randomNum = getRandom();
+            var randomTypie = typies[Math.floor(randomNum)];
+
+                makeClickies(randomTypie,i * 500,randomInterval);
+
+
+            }
+
+            timedCount();
+        }
 }
 
 
 
-// function roundFive() {
+function roundFive() {
 
-// showModal(5);
+roundDisplay.innerText = "Round: " + round;
+showModal(5);
 
-//     span.onclick = function() {
-//         modal.style.display = "none";
-//         startRound();
-//     }
+    span.onclick = function() {
+        modal.style.display = "none";
+        startRound();
+    }
 
-//     window.onclick = function(event) {
-//         if (event.target == modal) {
-//                 modal.style.display = "none";
-//                 startRound();
-//         }
-//     }
+    window.onclick = function(event) {
+        if (event.target == modal) {
+                modal.style.display = "none";
+                startRound();
+        }
+    }
+
+    function startRound() {
+
+        var randomInterval;
+
+            for (var i = 0; i < ((roundInfo[round]["timer"]*2)-1); i++) {
+
+                function setInterval() {
+                    if (i < (roundInfo[round]["timer"]*0.5)) {
+                        randomInterval = (Math.floor(Math.random() * 3000) + 2000);
+                    } else {
+                        randomInterval = (Math.floor(Math.random() * 2000) + 1000);
+                    }
+                }
+
+                setInterval();
 
 
-// function startRound() {
+            function getRandom(){
+              var num=Math.random();
+              if(num < 0.15) return 2;
+              else if (num > 0.9) return 3;
+              else if (num > 0.75) return 1;
+              // else if (num >= 0.35) return 0;
+              else return 0;
+            }
 
-// // random number between 1000 and 4000
-//     var randomInterval = Math.floor(Math.random() * ((4000-1000)+1) + 4000);
+            var randomNum = getRandom();
+            var randomTypie = typies[Math.floor(randomNum)];
 
-//     for (var i = 0; i < 1000; i++) {
-//         makeMoles(i * 1000,randomInterval);
-//     }
+                makeClickies(randomTypie,i * 500,randomInterval);
 
-// }
 
-// }
+            }
+
+            timedCount();
+        }
+
+}
+
+function roundSix() {
+
+roundDisplay.innerText = "Round: " + round;
+showModal(6);
+
+    span.onclick = function() {
+        modal.style.display = "none";
+        startRound();
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+                modal.style.display = "none";
+                startRound();
+        }
+    }
+
+    function startRound() {
+
+        var randomInterval;
+
+            for (var i = 0; i < ((roundInfo[round]["timer"]*2)-1); i++) {
+
+                function setInterval() {
+                    if (i < (roundInfo[round]["timer"]*0.5)) {
+                        randomInterval = (Math.floor(Math.random() * 2000) + 1000);
+                    } else {
+                        randomInterval = (Math.floor(Math.random() * 1500) + 1000);
+                    }
+                }
+
+                setInterval();
+
+
+            function getRandom(){
+              var num=Math.random();
+              if(num < 0.35) return 2;
+              else if (num > 0.8) return 3;
+              else if (num > 0.65) return 1;
+              // else if (num >= 0.35) return 0;
+              else return 0;
+            }
+
+            var randomNum = getRandom();
+            var randomTypie = typies[Math.floor(randomNum)];
+
+                makeClickies(randomTypie,i * 500,randomInterval);
+
+
+            }
+
+            timedCount();
+        }
+
+}
 
 function startGame(){
     switch (round) {
@@ -608,6 +694,13 @@ function startGame(){
         break;
         case 4:
         play = roundFour();
+        break;
+        case 5:
+        play = roundFive();
+        break;
+        case 6:
+        play = roundSix();
+        break;
         default:
         play = console.log("No game");
     }
