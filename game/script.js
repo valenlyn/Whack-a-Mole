@@ -27,24 +27,24 @@ var roundInfo = [
     },
     {
         "round": 2,
-        "instructions": "Get 15 points! Don't whack the happy bouncy moles",
+        "instructions": "Get 15 points \n Don't whack the happy bouncy moles",
         "points": 15,
-        "timer": 15,
+        "timer": 10,
         "img": "art/happy-mole.png"
     },
     {
         "round": 3,
-        "instructions": "Get 30 points!",
+        "instructions": "Get 30 points \n Squeeze the pimples",
         "points": 30,
         "timer": 15,
-        "img": "art/sad-mole.png"
+        "img": "art/pimple.png"
     },
     {
         "round": 4,
-        "instructions": " Rack up 50 points. Squeeze the pimples!",
+        "instructions": "Rack up 50 points \n Avoid the red happy moles",
         "points": 50,
-        "timer": 15,
-        "img": "art/pimple.png"
+        "timer": 20,
+        "img": "art/red-happy-mole.png"
     },
     {
         "round": 5,
@@ -256,16 +256,28 @@ function hit() {
 
 }
 
-function makeMoles(timeToAppear,timeToDisappear) {
-    setTimeout(function(){
+
+function makeClickies(type,timeToAppear,timeToDisappear) {
+     setTimeout(function(){
         var randomNumber = Math.floor(Math.random() * 35) + 1;
-    document.getElementsByClassName('mole')[randomNumber].setAttribute('style','display:inline');
-    document.getElementsByClassName('mole')[randomNumber].addEventListener('click',hit);
+    document.getElementsByClassName(type)[randomNumber].setAttribute('style','display:inline');
+    document.getElementsByClassName(type)[randomNumber].addEventListener('click',hit);
 
     setTimeout(function(){
-        document.getElementsByClassName('mole')[randomNumber].setAttribute('style','display:none')}, timeToDisappear);
+        document.getElementsByClassName(type)[randomNumber].setAttribute('style','display:none')}, timeToDisappear);
     },timeToAppear)
 }
+
+// function makeMoles(timeToAppear,timeToDisappear) {
+//     setTimeout(function(){
+//         var randomNumber = Math.floor(Math.random() * 35) + 1;
+//     document.getElementsByClassName('mole')[randomNumber].setAttribute('style','display:inline');
+//     document.getElementsByClassName('mole')[randomNumber].addEventListener('click',hit);
+
+//     setTimeout(function(){
+//         document.getElementsByClassName('mole')[randomNumber].setAttribute('style','display:none')}, timeToDisappear);
+//     },timeToAppear)
+// }
 
 function makeHappyMoles(timeToAppear,timeToDisappear) {
     setTimeout(function(){
@@ -355,13 +367,12 @@ function timedCount() {
 
                 if (score >= roundInfo[round]["points"]) {
                     round++;
-                    continueRound();
+                    startGame();
                     c = roundInfo[round]["timer"];
 
                 } else {
                     gameOver();
                 }
-
         }
     return round;
 }
@@ -385,13 +396,11 @@ function roundOne() {
     }
 
     function startRound() {
-    makeMoles(2200,3000);
-    makeMoles(1500,3000);
-    makeMoles(1000,4000);
-    makeMoles(2800,3000);
-    makeMoles(2000,3000);
-    makeMoles(2500,3000);
-    makeMoles(1900,4000);
+
+        for (var i = 0; i < 7; i++) {
+            makeClickies('mole',i * 500,(roundInfo[round]["timer"] * 1000) - (i * 1000));
+            makeClickies('mole',i * 1000,(roundInfo[round]["timer"] * 1000) - (i * 1000));
+        }
 
     timedCount();
 
@@ -465,31 +474,37 @@ function roundThree() {
     }
 
     function startRound() {
-    makeMoles(1000,4000);
-    makeMoles(2000,3000);
-    makeMoles(2500,3000);
-    makeMoles(3000,2500);
-    makeMoles(3500,3000);
-    makeMoles(4000,1500);
-    makeMoles(4500,2000);
+    makeMoles(1000,2000);
+    makeMoles(2000,2500);
+    makeMoles(2500,2700);
+    makeMoles(3000,1500);
+    makeMoles(3500,2000);
+    makeMoles(4000,2500);
+    makeMoles(4500,1000);
     makeMoles(5000,3000);
-    makeMoles(6000,1500);
-    makeMoles(6500,2000);
-    makeMoles(7000,3000);
-    makeMoles(8000,3000);
-    makeMoles(8500,2300);
-    makeMoles(9000,2000);
-    makeMoles(9500,3000);
-    makeMoles(10000,4000);
-    makeMoles(11000,3000);
-    makeMoles(12000,2500);
+    makeMoles(6300,1500);
+    makeMoles(7000,2500);
+    makeMoles(8000,1500);
+    makeMoles(9000,2500);
+    makeMoles(10500,2500);
+    makeMoles(11000,1000);
+    makeMoles(11500,1000);
+    makeMoles(12000,1300);
+    makeMoles(12500,2200);
+    makeMoles(13000,2000);
 
-    makeHappyMoles(2000,3000);
+    makePimples(2000,2000);
+    makePimples(5000,1500);
+    makePimples(8000,2000);
+    makePimples(10000,3000);
+    makePimples(12000,1500);
+
+    makeHappyMoles(1500,2000);
+    makeHappyMoles(3000,3000);
     makeHappyMoles(5500,3000);
     makeHappyMoles(6500,3000);
-    makeHappyMoles(10000,3000);
-    makeHappyMoles(12000,1800);
-    makeHappyMoles(13000,1800);
+    makeHappyMoles(11700,2500);
+    makeHappyMoles(12500,1300);
 
     timedCount();
     }
@@ -497,88 +512,28 @@ function roundThree() {
 }
 
 
-// function roundFour() {
+function roundFour() {
 
-// showModal(4);
+showModal(4);
 
-//     span.onclick = function() {
-//         modal.style.display = "none";
-//         startRound();
-//     }
+    span.onclick = function() {
+        modal.style.display = "none";
+        startRound();
+    }
 
-//     window.onclick = function(event) {
-//         if (event.target == modal) {
-//                 modal.style.display = "none";
-//                 startRound();
-//         }
-//     }
+    window.onclick = function(event) {
+        if (event.target == modal) {
+                modal.style.display = "none";
+                startRound();
+        }
+    }
 
-// function startRound() {
-//     makeMoles(1000,2000);
-//     makeMoles(2000,2500);
-//     makeMoles(2500,2700);
-//     makeMoles(3000,1500);
-//     makeMoles(3500,2000);
-//     makeMoles(4000,2500);
-//     makeMoles(4500,1000);
-//     makeMoles(5000,3000);
-//     makeMoles(6300,1500);
-//     makeMoles(7000,2500);
-//     makeMoles(8000,1500);
-//     makeMoles(9000,2500);
-//     makeMoles(10500,2500);
-//     makeMoles(11000,1000);
-//     makeMoles(11500,1000);
-//     makeMoles(12000,1300);
-//     makeMoles(12500,2200);
-//     makeMoles(13000,2000);
-
-//     makePimples(2000,2000);
-//     makePimples(5000,1500);
-//     makePimples(8000,2000);
-//     makePimples(10000,3000);
-//     makePimples(12000,1500);
-
-//     makeHappyMoles(1500,2000);
-//     makeHappyMoles(3000,3000);
-//     makeHappyMoles(5500,3000);
-//     makeHappyMoles(6500,3000);
-//     makeHappyMoles(11700,2500);
-//     makeHappyMoles(12500,1300);
-
-//     var c = 0;
-//         var t;
-
-//         function timedCount() {
-
-//             if (c <= 9) {
-//                 document.getElementById("timer").innerText = "00:0" + c;
-//             } else if (c > 9) {
-//                  document.getElementById("timer").innerText = "00:" + c;
-//             }
+function startRound() {
 
 
-//             c = c + 1;
-//             t = setTimeout(timedCount, 1000);
-
-//                 if (c === 16) {
-//                 clearTimeout(t);
-
-//                     if (score >= 50) {
-//                         round++;
-//                         roundFive();
-//                         }
-
-
-//                     } else {
-//                         gameOver();
-//                     }
-//                 }
-
-//         }
-
-//         timedCount();
-// }
+        timedCount();
+    }
+}
 
 
 
@@ -612,7 +567,7 @@ function roundThree() {
 
 // }
 
-function continueRound(){
+function startGame(){
     switch (round) {
         case 1:
         play = roundOne();
@@ -631,5 +586,5 @@ function continueRound(){
 
 }
 
-continueRound();
+startGame();
 // getHighScores();
