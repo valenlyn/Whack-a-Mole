@@ -1,7 +1,7 @@
 console.log("Linked");
 
-var score = 0;
-var round = 1;
+var score = 5;
+var round = 2;
 var status = "";
 
 var info = document.getElementsByClassName('info')[0];
@@ -10,6 +10,8 @@ var roundDisplay = document.getElementById('displayRound');
 
 var area = document.getElementById('main');
 var boxes = [];
+
+var typies = ["mole", "happy-mole", "pimple"];
 
 var roundInfo = [
     {
@@ -27,8 +29,8 @@ var roundInfo = [
     },
     {
         "round": 2,
-        "instructions": "Get 15 points \n Don't whack the happy bouncy moles",
-        "points": 15,
+        "instructions": "Get 10 points \n Don't whack the happy bouncy moles",
+        "points": 10,
         "timer": 10,
         "img": "art/happy-mole.png"
     },
@@ -306,12 +308,12 @@ function restartGame() {
 }
 
 
-
 function gameOver() {
-// hide game
+// hide game + hide moles
     var game = document.getElementById('main');
     game.setAttribute('style','background-image:url("")');
     document.getElementsByClassName('info')[0].setAttribute('style','display:none');
+
 
     // show game over "modal"
         var gameOverPopUp = document.getElementsByClassName('game-over')[0];
@@ -397,9 +399,14 @@ function roundOne() {
 
     function startRound() {
 
-        for (var i = 0; i < 7; i++) {
-            makeClickies('mole',i * 500,(roundInfo[round]["timer"] * 1000) - (i * 1000));
-            makeClickies('mole',i * 1000,(roundInfo[round]["timer"] * 1000) - (i * 1000));
+
+        for (var i = 0; i < (roundInfo[round]["timer"] * 1.5); i++) {
+
+            var randomInterval = (Math.floor(Math.random() * 4000) + 2000);
+
+            makeClickies('mole',i * 500,randomInterval);
+                console.log(i * 500);
+                console.log(randomInterval);
         }
 
     timedCount();
@@ -407,6 +414,7 @@ function roundOne() {
     }
 
 }
+
 
 function roundTwo() {
 
@@ -426,31 +434,51 @@ function roundTwo() {
     }
 
     function startRound() {
-    makeMoles(1000,4000);
-    makeMoles(2000,3000);
-    makeMoles(2500,3000);
-    makeMoles(3000,2500);
-    makeMoles(3500,3000);
-    makeMoles(4000,1500);
-    makeMoles(4500,2000);
-    makeMoles(5000,3000);
-    makeMoles(6000,1500);
-    makeMoles(6500,2000);
-    makeMoles(7000,3000);
-    makeMoles(7500,2000);
-    makeMoles(8000,3000);
-    makeMoles(8500,2300);
-    makeMoles(9000,2000);
-    makeMoles(9500,3000);
-    makeMoles(10000,4000);
-    makeMoles(11000,3000);
 
-    makeHappyMoles(2000,3000);
-    makeHappyMoles(5500,3000);
-    makeHappyMoles(6500,3000);
-    makeHappyMoles(10000,3000);
-    makeHappyMoles(12000,1800);
-    makeHappyMoles(12500,2500);
+        // var randomInterval = (Math.floor(Math.random() * 4000) + 1000);
+
+        var randomInterval;
+
+
+        for (var i = 0; i < ((roundInfo[round]["timer"]*2)-1); i++) {
+
+            function setInterval() {
+                if (i < (roundInfo[round]["timer"]*0.5)) {
+                    randomInterval = (Math.floor(Math.random() * 4000) + 2000);
+                } else {
+                    randomInterval = (Math.floor(Math.random() * 3000) + 1000);
+                }
+            }
+
+            setInterval();
+
+
+        function getRandom(){
+          var num=Math.random();
+          if(num < 0.35) return 1;
+          else if(num >= 0.35) return 0;
+          else return 0;
+        }
+
+        var randomNum = getRandom();
+        var randomTypie = typies[Math.floor(randomNum)];
+
+
+
+            makeClickies(randomTypie,i * 500,randomInterval);
+                console.log(randomTypie);
+                console.log(i * 500);
+                console.log(randomInterval);
+
+        }
+
+
+    // makeHappyMoles(2000,3000);
+    // makeHappyMoles(5500,3000);
+    // makeHappyMoles(6500,3000);
+    // makeHappyMoles(10000,3000);
+    // makeHappyMoles(12000,1800);
+    // makeHappyMoles(12500,2500);
 
     timedCount();
 
