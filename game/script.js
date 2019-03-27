@@ -1,18 +1,17 @@
 console.log("Linked");
 
-var score = 0;
-var round = 1;
+var score = 5;
+var round = 2;
 var status = "";
 
 var info = document.getElementsByClassName('info')[0];
-// var displayScore = document.createElement('p');
-// displayScore.innerText = "Score: " + score;
-// info.appendChild(displayScore);
 
 var roundDisplay = document.getElementById('displayRound');
 
 var area = document.getElementById('main');
 var boxes = [];
+
+var typies = ["mole", "happy-mole", "pimple"];
 
 var roundInfo = [
     {
@@ -30,24 +29,24 @@ var roundInfo = [
     },
     {
         "round": 2,
-        "instructions": "Get 15 points! Don't whack the happy bouncy moles",
-        "points": 15,
-        "timer": 15,
+        "instructions": "Get 10 points \n Don't whack the happy bouncy moles",
+        "points": 10,
+        "timer": 10,
         "img": "art/happy-mole.png"
     },
     {
         "round": 3,
-        "instructions": "Get 30 points!",
+        "instructions": "Get 30 points \n Squeeze the pimples",
         "points": 30,
         "timer": 15,
-        "img": "art/sad-mole.png"
+        "img": "art/pimple.png"
     },
     {
         "round": 4,
-        "instructions": " Rack up 50 points. Squeeze the pimples!",
+        "instructions": "Rack up 50 points \n Avoid the red happy moles",
         "points": 50,
-        "timer": 15,
-        "img": "art/pimple.png"
+        "timer": 20,
+        "img": "art/red-happy-mole.png"
     },
     {
         "round": 5,
@@ -106,7 +105,6 @@ function getInput() {
     console.log(record.getId());
 });
 
-// When there's time, loop through the scores, get position, and do insertBefore instead of removing the entire table
     var oldScoreBoard = document.querySelector('table');
     var scoreBoardNames = oldScoreBoard.getElementsByTagName('tr');
     var currentTable = document.getElementsByTagName('tr');
@@ -115,7 +113,7 @@ function getInput() {
         oldScoreBoard.removeChild(scoreBoardNames[i]);
     }
 
-    getAirtableRecords();
+    // setTimeout(getAirtableRecords,100);
 
 }
 
@@ -128,7 +126,7 @@ function getHighScores() {
     // Selecting the first 3 records in Grid view:
     maxRecords: 10,
     view: "Grid view",
-    sort: [{field: "Score", direction:"desc"}]
+    sort: [{field: "Score", direction:"desc"},{field: "Created Time", direction:"desc"}]
 }).eachPage(function page(records, fetchNextPage) {
     // This function (`page`) will get called for each page of records.
 
@@ -152,7 +150,7 @@ base('Table 1').select({
     // Selecting the first 3 records in Grid view:
     maxRecords: 10,
     view: "Grid view",
-    sort: [{field: "Score", direction:"desc"}]
+    sort: [{field: "Score", direction:"desc"},{field: "Created Time", direction:"desc"}]
 }).eachPage(function page(records, fetchNextPage) {
     // This function (`page`) will get called for each page of records.
 
@@ -226,7 +224,6 @@ function createDivs() {
         div.appendChild(pimples);
 
     }
-
 }
 
 createDivs();
@@ -261,16 +258,28 @@ function hit() {
 
 }
 
-function makeMoles(timeToAppear,timeToDisappear) {
-    setTimeout(function(){
+
+function makeClickies(type,timeToAppear,timeToDisappear) {
+     setTimeout(function(){
         var randomNumber = Math.floor(Math.random() * 35) + 1;
-    document.getElementsByClassName('mole')[randomNumber].setAttribute('style','display:inline');
-    document.getElementsByClassName('mole')[randomNumber].addEventListener('click',hit);
+    document.getElementsByClassName(type)[randomNumber].setAttribute('style','display:inline');
+    document.getElementsByClassName(type)[randomNumber].addEventListener('click',hit);
 
     setTimeout(function(){
-        document.getElementsByClassName('mole')[randomNumber].setAttribute('style','display:none')}, timeToDisappear);
+        document.getElementsByClassName(type)[randomNumber].setAttribute('style','display:none')}, timeToDisappear);
     },timeToAppear)
 }
+
+// function makeMoles(timeToAppear,timeToDisappear) {
+//     setTimeout(function(){
+//         var randomNumber = Math.floor(Math.random() * 35) + 1;
+//     document.getElementsByClassName('mole')[randomNumber].setAttribute('style','display:inline');
+//     document.getElementsByClassName('mole')[randomNumber].addEventListener('click',hit);
+
+//     setTimeout(function(){
+//         document.getElementsByClassName('mole')[randomNumber].setAttribute('style','display:none')}, timeToDisappear);
+//     },timeToAppear)
+// }
 
 function makeHappyMoles(timeToAppear,timeToDisappear) {
     setTimeout(function(){
@@ -299,19 +308,18 @@ function restartGame() {
 }
 
 
-
 function gameOver() {
-
-// hide game
+// hide game + hide moles
     var game = document.getElementById('main');
     game.setAttribute('style','background-image:url("")');
     document.getElementsByClassName('info')[0].setAttribute('style','display:none');
+
 
     // show game over "modal"
         var gameOverPopUp = document.getElementsByClassName('game-over')[0];
         gameOverPopUp.setAttribute('style','display:flex');
 
-        getAirtableRecords();
+        // getAirtableRecords();
 
         var gameMsg = document.getElementsByClassName('message')[0];
 
@@ -319,16 +327,16 @@ function gameOver() {
     if (score === 0) {
         gameMsg.innerText = "Sorry, you lost!";
         console.log("score is 0");
+    } else if (score === Math.min(...topScores)) {
+        gameMsg.innerText = "New high score!";
+        document.getElementsByClassName('input-button')[0].setAttribute('style','display:flex');
+    } else if (score > Math.min(...topScores) || (topScores.length <= 9)) {
+        gameMsg.innerText = "New high score!";
+        document.getElementsByClassName('input-button')[0].setAttribute('style','display:flex');
     } else if (score < Math.min(...topScores)) {
         console.log(topScores);
         console.log(Math.min(...topScores));
          gameMsg.innerText = "Sorry, you lost!";
-    } else if (score === Math.min(...topScores)) {
-        gameMsg.innerText = "New high score!";
-        document.getElementsByClassName('input-button')[0].setAttribute('style','display:flex');
-    } else if (score > Math.min(...topScores)) {
-        gameMsg.innerText = "New high score!";
-        document.getElementsByClassName('input-button')[0].setAttribute('style','display:flex');
     }
 
 
@@ -337,45 +345,39 @@ function gameOver() {
 
 }
 
+    var c = roundInfo[round]["timer"];
+    var t;
 
-// 😭😭😭😭😭😭😭
 
-var c = 5;
-var t;
-
-function countdownTimer(pointsNeeded) {
+function timedCount() {
 
         if (c <= 9) {
-            document.getElementById("timer").innerText = "00:0" + c;
+            document.getElementById("displayTimer").innerText = "00:0" + c;
         } else if (c > 9) {
-             document.getElementById("timer").innerText = "00:" + c;
+             document.getElementById("displayTimer").innerText = "00:" + c;
         }
 
-
         c = c - 1;
-
         t = setTimeout(function(){
-            countdownTimer(45);
+
+        timedCount();
+
         }, 1000);
 
-            if (c === -1) {
-
+        if (c === -1) {
             clearTimeout(t);
-                if (score >= pointsNeeded) {
-                    function message() {
-                        console.log("Won");
+
+                if (score >= roundInfo[round]["points"]) {
                     round++;
-                    }
-
-                    setTimeout(message,1000);
-
+                    startGame();
+                    c = roundInfo[round]["timer"];
 
                 } else {
-                    console.log("Failed")
+                    gameOver();
                 }
+        }
+    return round;
 }
-}
-countdownTimer(2);
 
 
 function roundOne() {
@@ -396,48 +398,23 @@ function roundOne() {
     }
 
     function startRound() {
-    makeMoles(2200,3000);
-    makeMoles(1500,3000);
-    makeMoles(1000,4000);
-    makeMoles(2800,3000);
-    makeMoles(2000,3000);
-    makeMoles(2500,3000);
-    makeMoles(1900,4000);
 
-    var c = 5;
-    var t;
 
-    function timedCount() {
+        for (var i = 0; i < (roundInfo[round]["timer"] * 1.5); i++) {
 
-        if (c <= 9) {
-            document.getElementById("displayTimer").innerText = "00:0" + c;
-        } else if (c > 9) {
-             document.getElementById("displayTimer").innerText = "00:" + c;
+            var randomInterval = (Math.floor(Math.random() * 4000) + 2000);
+
+            makeClickies('mole',i * 500,randomInterval);
+                console.log(i * 500);
+                console.log(randomInterval);
         }
 
-
-        c = c - 1;
-        t = setTimeout(timedCount, 1000);
-
-            if (c === -1) {
-            clearTimeout(t);
-
-                if (score >= 5) {
-                    round++;
-                    roundTwo();
-
-                } else {
-                    status = "lost";
-                    gameOver();
-                }
-            }
-
-    }
-
     timedCount();
+
     }
 
 }
+
 
 function roundTwo() {
 
@@ -457,62 +434,54 @@ function roundTwo() {
     }
 
     function startRound() {
-    makeMoles(1000,4000);
-    makeMoles(2000,3000);
-    makeMoles(2500,3000);
-    makeMoles(3000,2500);
-    makeMoles(3500,3000);
-    makeMoles(4000,1500);
-    makeMoles(4500,2000);
-    makeMoles(5000,3000);
-    makeMoles(6000,1500);
-    makeMoles(6500,2000);
-    makeMoles(7000,3000);
-    makeMoles(7500,2000);
-    makeMoles(8000,3000);
-    makeMoles(8500,2300);
-    makeMoles(9000,2000);
-    makeMoles(9500,3000);
-    makeMoles(10000,4000);
-    makeMoles(11000,3000);
 
-    makeHappyMoles(2000,3000);
-    makeHappyMoles(5500,3000);
-    makeHappyMoles(6500,3000);
-    makeHappyMoles(10000,3000);
-    makeHappyMoles(12000,1800);
-    makeHappyMoles(12500,2500);
+        // var randomInterval = (Math.floor(Math.random() * 4000) + 1000);
 
-    var c = 15;
-    var t;
-
-    function timedCount() {
-
-        if (c <= 9) {
-            document.getElementById("displayTimer").innerText = "00:0" + c;
-        } else if (c > 9) {
-             document.getElementById("displayTimer").innerText = "00:" + c;
-        }
+        var randomInterval;
 
 
-        c = c - 1;
-        t = setTimeout(timedCount, 1000);
+        for (var i = 0; i < ((roundInfo[round]["timer"]*2)-1); i++) {
 
-            if (c === -1) {
-            clearTimeout(t);
-
-                if (score >= 15) {
-                    round++;
-                    roundThree();
-
+            function setInterval() {
+                if (i < (roundInfo[round]["timer"]*0.5)) {
+                    randomInterval = (Math.floor(Math.random() * 4000) + 2000);
                 } else {
-                    gameOver();
+                    randomInterval = (Math.floor(Math.random() * 3000) + 1000);
                 }
             }
 
-    }
+            setInterval();
+
+
+        function getRandom(){
+          var num=Math.random();
+          if(num < 0.35) return 1;
+          else if(num >= 0.35) return 0;
+          else return 0;
+        }
+
+        var randomNum = getRandom();
+        var randomTypie = typies[Math.floor(randomNum)];
+
+
+
+            makeClickies(randomTypie,i * 500,randomInterval);
+                console.log(randomTypie);
+                console.log(i * 500);
+                console.log(randomInterval);
+
+        }
+
+
+    // makeHappyMoles(2000,3000);
+    // makeHappyMoles(5500,3000);
+    // makeHappyMoles(6500,3000);
+    // makeHappyMoles(10000,3000);
+    // makeHappyMoles(12000,1800);
+    // makeHappyMoles(12500,2500);
 
     timedCount();
+
     }
 }
 
@@ -533,85 +502,6 @@ function roundThree() {
     }
 
     function startRound() {
-    makeMoles(1000,4000);
-    makeMoles(2000,3000);
-    makeMoles(2500,3000);
-    makeMoles(3000,2500);
-    makeMoles(3500,3000);
-    makeMoles(4000,1500);
-    makeMoles(4500,2000);
-    makeMoles(5000,3000);
-    makeMoles(6000,1500);
-    makeMoles(6500,2000);
-    makeMoles(7000,3000);
-    makeMoles(8000,3000);
-    makeMoles(8500,2300);
-    makeMoles(9000,2000);
-    makeMoles(9500,3000);
-    makeMoles(10000,4000);
-    makeMoles(11000,3000);
-    makeMoles(12000,2500);
-
-    makeHappyMoles(2000,3000);
-    makeHappyMoles(5500,3000);
-    makeHappyMoles(6500,3000);
-    makeHappyMoles(10000,3000);
-    makeHappyMoles(12000,1800);
-    makeHappyMoles(13000,1800);
-
-    var c = 15;
-    var t;
-
-    function timedCount() {
-
-        if (c <= 9) {
-            document.getElementById("timer").innerText = "00:0" + c;
-        } else if (c > 9) {
-             document.getElementById("timer").innerText = "00:" + c;
-        }
-
-
-        c = c - 1;
-        t = setTimeout(timedCount, 1000);
-
-            if (c === -1) {
-            clearTimeout(t);
-
-                if (score >= 30) {
-                    round++;
-                    roundFour();
-
-                } else {
-                    status = "lost";
-                    gameOver();
-                }
-            }
-
-    }
-
-    timedCount();
-    }
-
-}
-
-
-function roundFour() {
-
-showModal(4);
-
-    span.onclick = function() {
-        modal.style.display = "none";
-        startRound();
-    }
-
-    window.onclick = function(event) {
-        if (event.target == modal) {
-                modal.style.display = "none";
-                startRound();
-        }
-    }
-
-function startRound() {
     makeMoles(1000,2000);
     makeMoles(2000,2500);
     makeMoles(2500,2700);
@@ -644,45 +534,15 @@ function startRound() {
     makeHappyMoles(11700,2500);
     makeHappyMoles(12500,1300);
 
-    var c = 0;
-        var t;
+    timedCount();
+    }
 
-        function timedCount() {
-
-            if (c <= 9) {
-                document.getElementById("timer").innerText = "00:0" + c;
-            } else if (c > 9) {
-                 document.getElementById("timer").innerText = "00:" + c;
-            }
-
-
-            c = c + 1;
-            t = setTimeout(timedCount, 1000);
-
-                if (c === 16) {
-                clearTimeout(t);
-
-                    if (score >= 50) {
-                        round++;
-                        roundFive();
-                        }
-
-
-                    } else {
-                        gameOver();
-                    }
-                }
-
-        }
-
-        timedCount();
 }
 
 
+function roundFour() {
 
-function roundFive() {
-
-showModal(5);
+showModal(4);
 
     span.onclick = function() {
         modal.style.display = "none";
@@ -696,35 +556,63 @@ showModal(5);
         }
     }
 
-
 function startRound() {
 
-// random number between 1000 and 4000
-    var randomInterval = Math.floor(Math.random() * ((4000-1000)+1) + 4000);
 
-    for (var i = 0; i < 1000; i++) {
-        makeMoles(i * 1000,randomInterval);
+        timedCount();
+    }
+}
+
+
+
+// function roundFive() {
+
+// showModal(5);
+
+//     span.onclick = function() {
+//         modal.style.display = "none";
+//         startRound();
+//     }
+
+//     window.onclick = function(event) {
+//         if (event.target == modal) {
+//                 modal.style.display = "none";
+//                 startRound();
+//         }
+//     }
+
+
+// function startRound() {
+
+// // random number between 1000 and 4000
+//     var randomInterval = Math.floor(Math.random() * ((4000-1000)+1) + 4000);
+
+//     for (var i = 0; i < 1000; i++) {
+//         makeMoles(i * 1000,randomInterval);
+//     }
+
+// }
+
+// }
+
+function startGame(){
+    switch (round) {
+        case 1:
+        play = roundOne();
+        break;
+        case 2:
+        play = roundTwo();
+        break;
+        case 3:
+        play = roundThree();
+        break;
+        case 4:
+        play = roundFour();
+        default:
+        play = console.log("No game");
     }
 
 }
 
-}
-
-
-switch (round) {
-    case 1:
-    play = roundOne();
-    break;
-    case 2:
-    play = roundTwo();
-    break;
-    case 3:
-    play = roundThree();
-    break;
-    case 4:
-    play = roundFour();
-    default:
-    play = console.log("No game");
-}
-
-getHighScores();
+startGame();
+// getHighScores();
