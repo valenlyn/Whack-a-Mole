@@ -2,7 +2,7 @@ console.log("Linked");
 
 var score = 0;
 var round = 1;
-var status = "";
+// var status = "";
 
 var info = document.getElementsByClassName('info')[0];
 
@@ -218,8 +218,6 @@ function createDivs() {
         moles.setAttribute('src','art/sad-mole.png');
         moles.setAttribute('style','width:50px;height:50px;display:none');
         moles.setAttribute('class','mole');
-        // moles.setAttribute('style','height:20px');
-        // moles.setAttribute('style','display:none');
         div.appendChild(moles);
 
         var happyMoles = document.createElement('img');
@@ -406,8 +404,8 @@ function roundOne() {
             var randomInterval = (Math.floor(Math.random() * 4000) + 2000);
 
             makeClickies('mole',i * 500,randomInterval);
-                console.log(i * 500);
-                console.log(randomInterval);
+                // console.log(i * 500);
+                // console.log(randomInterval);
         }
 
     timedCount();
@@ -507,7 +505,7 @@ function roundThree() { //pimple
 
         function getRandom(){
           var num=Math.random();
-          if(num < 0.15) return 2;
+          if(num < 0.20) return 2;
           else if (num > 0.85) return 1;
           else if(num >= 0.35) return 0;
           else return 0;
@@ -552,9 +550,9 @@ function roundFour() {
 
                 function setInterval() {
                     if (i < (roundInfo[round]["timer"]*0.5)) {
-                        randomInterval = (Math.floor(Math.random() * 4000) + 2000);
+                        randomInterval = (Math.floor(Math.random() * 2500) + 2000);
                     } else {
-                        randomInterval = (Math.floor(Math.random() * 2500) + 1000);
+                        randomInterval = (Math.floor(Math.random() * 2000) + 800);
                     }
                 }
 
@@ -563,9 +561,9 @@ function roundFour() {
 
             function getRandom(){
               var num=Math.random();
-              if(num < 0.15) return 2;
-              else if (num > 0.9) return 3;
-              else if (num > 0.75) return 1;
+              if(num < 0.20) return 2;
+              else if (num > 0.85) return 3;
+              else if (num > 0.65) return 1;
               // else if (num >= 0.35) return 0;
               else return 0;
             }
@@ -609,9 +607,9 @@ showModal(5);
 
                 function setInterval() {
                     if (i < (roundInfo[round]["timer"]*0.5)) {
-                        randomInterval = (Math.floor(Math.random() * 3000) + 2000);
-                    } else {
                         randomInterval = (Math.floor(Math.random() * 2000) + 1000);
+                    } else {
+                        randomInterval = (Math.floor(Math.random() * 2000) + 800);
                     }
                 }
 
@@ -667,7 +665,7 @@ showModal(6);
                     if (i < (roundInfo[round]["timer"]*0.5)) {
                         randomInterval = (Math.floor(Math.random() * 2000) + 1000);
                     } else {
-                        randomInterval = (Math.floor(Math.random() * 1500) + 1000);
+                        randomInterval = (Math.floor(Math.random() * 1500) + 700);
                     }
                 }
 
