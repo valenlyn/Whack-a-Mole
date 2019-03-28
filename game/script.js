@@ -59,8 +59,8 @@ var roundInfo = [
         "round": 6,
         "instructions": "Get 300 points!",
         "points": 300,
-        "timer": 20,
-        "img": "art/happy-mole.png"
+        "timer": 25,
+        "img": "art/red-happy-mole.png"
     }
 ];
 
@@ -581,7 +581,6 @@ function roundFour() {
 }
 
 
-
 function roundFive() {
 
 roundDisplay.innerText = "Round: " + round;
@@ -607,9 +606,9 @@ showModal(5);
 
                 function setInterval() {
                     if (i < (roundInfo[round]["timer"]*0.5)) {
-                        randomInterval = (Math.floor(Math.random() * 2000) + 1000);
-                    } else {
                         randomInterval = (Math.floor(Math.random() * 2000) + 800);
+                    } else {
+                        randomInterval = (Math.floor(Math.random() * 1800) + 700);
                     }
                 }
 
@@ -618,9 +617,9 @@ showModal(5);
 
             function getRandom(){
               var num=Math.random();
-              if(num < 0.15) return 2;
-              else if (num > 0.9) return 3;
-              else if (num > 0.75) return 1;
+              if(num < 0.25) return 2;
+              else if (num > 0.85) return 3;
+              else if (num > 0.70) return 1;
               // else if (num >= 0.35) return 0;
               else return 0;
             }
@@ -665,7 +664,7 @@ showModal(6);
                     if (i < (roundInfo[round]["timer"]*0.5)) {
                         randomInterval = (Math.floor(Math.random() * 2000) + 1000);
                     } else {
-                        randomInterval = (Math.floor(Math.random() * 1500) + 700);
+                        randomInterval = (Math.floor(Math.random() * 1000) + 500);
                     }
                 }
 
@@ -685,6 +684,7 @@ showModal(6);
             var randomTypie = typies[Math.floor(randomNum)];
 
                 makeClickies(randomTypie,i * 500,randomInterval);
+                makeClickies(randomTypie,i * 700,randomInterval);
 
 
             }
