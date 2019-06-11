@@ -1,6 +1,6 @@
 # Whack-a-Mole
 
-[Play it here](https://valenlyn.github.io/Whack-a-Mole/game/index.html)
+[Play it here](https://valenlyn.github.io/Whack-a-Mole/game/index.html).
 
 # Intructions
 
